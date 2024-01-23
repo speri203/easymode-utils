@@ -16,7 +16,7 @@ class LoggerUtils:
 
         self.stream_handler = logging.StreamHandler()
         formatter = logging.Formatter(
-            "%(asctime) - %(levelname)s - %(module)s.%(funcName)s (%(lineno)d): %(message)s"
+            "%(asctime)s - %(levelname)s - %(module)s.%(funcName)s (%(lineno)d): %(message)s"
         )
         self.stream_handler.setFormatter(formatter)
         self.logger.addHandler(self.stream_handler)
@@ -56,17 +56,11 @@ class LoggerUtils:
         Returns:
             None
         """
+        # have to first remove all handlers already defined for logger
+        for handler in self.logger.handlers[:]:
+            self.logger.removeHandler(handler)
+
+        self.stream_handler = logging.StreamHandler()
         formatter = logging.Formatter(format)
         self.stream_handler.setFormatter(formatter)
-
-
-# def main():
-#     logger = LoggerUtils().get_logger
-#     logger.debug("This is a debug message")
-#     logger.info("This is an info message")
-#     logger.warning("This is a warning message")
-#     logger.error("This is an error message")
-#     logger.critical("This is a critical message")
-#
-#
-# main()
+        self.logger.addHandler(self.stream_handler)
