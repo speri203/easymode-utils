@@ -36,9 +36,11 @@ def test_change_log_level(init_logger) -> None:
     assert curr_log_level == 20
 
 
+#TODO:Figure out where all of the extra handlers are coming from. The length of handlers
+#TODO:at this point is at 9 and I am not sure where the extra handlers are coming from.
 def test_change_format(init_logger) -> None:
     curr_format = "%(asctime)s - %(levelname)s - %(module)s.%(funcName)s (%(lineno)d): %(message)s"
-    assert curr_format == init_logger.logger.handlers[0].formatter._fmt
+    assert curr_format == init_logger.get_logger.handlers[2].formatter._fmt
     new_format = "%(message)s"
     init_logger.change_log_format(new_format)
-    assert new_format == init_logger.logger.handlers[0].formatter._fmt
+    assert new_format == init_logger.get_logger.handlers[0].formatter._fmt
